@@ -1,0 +1,2 @@
+# Un-ignore project-level Claude Code settings (contains shared permissions)
+!.claude/settings.local.json
