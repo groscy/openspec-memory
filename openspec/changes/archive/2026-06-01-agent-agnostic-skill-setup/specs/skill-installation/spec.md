@@ -1,4 +1,4 @@
-## ADDED Requirements
+## Requirements
 
 ### Requirement: Install skills CLI command
 The `openspec` CLI SHALL provide an `install skills` subcommand that reads all skills from `openspec/skills/` and generates per-environment adapter files. The command SHALL accept an `--env` flag accepting `claude`, `copilot`, `intellij`, or `all` (default: `all`).

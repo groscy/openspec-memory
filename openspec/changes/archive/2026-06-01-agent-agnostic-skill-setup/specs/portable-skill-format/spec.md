@@ -1,4 +1,4 @@
-## ADDED Requirements
+## Requirements
 
 ### Requirement: Vendor-neutral skill directory layout
 Every OpenSpec Skill SHALL be stored as `openspec/skills/<name>/SKILL.md` in the project repository, where `<name>` is the kebab-case skill identifier. This location SHALL be the canonical source of truth; per-environment adapter files are derived output.
