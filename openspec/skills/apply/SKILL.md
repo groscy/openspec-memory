@@ -1,6 +1,7 @@
 ---
 name: apply
 description: "Implement tasks from an OpenSpec change"
+agent: agent
 triggers:
   - /opsx:apply
 agents: [claude, copilot, intellij]

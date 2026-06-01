@@ -1,14 +1,14 @@
+---
+description: "Manage the OpenSpec domain knowledge base - initialize, add entries, and sync the index"
+agent: agent
+---
+<!-- Source: openspec/skills/domain/SKILL.md | Trigger: /opsx:domain -->
+
 # OpenSpec Skill: domain
 
 **Trigger**: `/opsx:domain`
 
-**Description**: Manage the OpenSpec domain knowledge base - initialize, add entries, and sync the index
-
-**Usage**: Start a Copilot Chat message with `/opsx:domain <subcommand>` to invoke this skill.
-
-Subcommands: `init`, `add <type> <name>`, `sync`
-
-<!-- Source: openspec/skills/domain/SKILL.md -->
+**Usage**: Start a Copilot Chat message with `/opsx:domain <subcommand>`. Subcommands: `init`, `add <type> <name>`, `sync`.
 
 ---
 

@@ -1,12 +1,14 @@
+---
+description: "Enter explore mode - think through ideas, investigate problems, clarify requirements"
+agent: ask
+---
+<!-- Source: openspec/skills/explore/SKILL.md | Trigger: /opsx:explore -->
+
 # OpenSpec Skill: explore
 
 **Trigger**: `/opsx:explore`
 
-**Description**: Enter explore mode - think through ideas, investigate problems, clarify requirements
-
 **Usage**: Start a Copilot Chat message with `/opsx:explore` (optionally followed by a topic) to enter explore mode.
-
-<!-- Source: openspec/skills/explore/SKILL.md -->
 
 ---
 

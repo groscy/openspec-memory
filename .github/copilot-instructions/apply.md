@@ -1,12 +1,14 @@
+---
+description: "Implement tasks from an OpenSpec change"
+agent: agent
+---
+<!-- Source: openspec/skills/apply/SKILL.md | Trigger: /opsx:apply -->
+
 # OpenSpec Skill: apply
 
 **Trigger**: `/opsx:apply`
 
-**Description**: Implement tasks from an OpenSpec change
-
 **Usage**: Start a Copilot Chat message with `/opsx:apply` (optionally followed by a change name) to invoke this skill.
-
-<!-- Source: openspec/skills/apply/SKILL.md -->
 
 ---
 

@@ -1,6 +1,7 @@
 ---
 name: domain
 description: "Manage the OpenSpec domain knowledge base - initialize, add entries, and sync the index"
+agent: agent
 triggers:
   - /opsx:domain
 agents: [claude, copilot, intellij]

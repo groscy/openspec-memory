@@ -1,6 +1,7 @@
 ---
 name: archive
 description: "Archive a completed change in the experimental workflow"
+agent: agent
 triggers:
   - /opsx:archive
 agents: [claude, copilot, intellij]

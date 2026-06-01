@@ -1,12 +1,14 @@
+---
+description: "Propose a new change - create it and generate all artifacts in one step"
+agent: agent
+---
+<!-- Source: openspec/skills/propose/SKILL.md | Trigger: /opsx:propose -->
+
 # OpenSpec Skill: propose
 
 **Trigger**: `/opsx:propose`
 
-**Description**: Propose a new change - create it and generate all artifacts in one step
-
 **Usage**: Start a Copilot Chat message with `/opsx:propose` (optionally followed by a change name or description) to invoke this skill.
-
-<!-- Source: openspec/skills/propose/SKILL.md -->
 
 ---
 

@@ -1,12 +1,14 @@
+---
+description: "Archive a completed change in the experimental workflow"
+agent: agent
+---
+<!-- Source: openspec/skills/archive/SKILL.md | Trigger: /opsx:archive -->
+
 # OpenSpec Skill: archive
 
 **Trigger**: `/opsx:archive`
 
-**Description**: Archive a completed change in the experimental workflow
-
 **Usage**: Start a Copilot Chat message with `/opsx:archive` (optionally followed by a change name) to invoke this skill.
-
-<!-- Source: openspec/skills/archive/SKILL.md -->
 
 ---
 

@@ -1,6 +1,7 @@
 ---
 name: propose
 description: "Propose a new change - create it and generate all artifacts in one step"
+agent: agent
 triggers:
   - /opsx:propose
 agents: [claude, copilot, intellij]

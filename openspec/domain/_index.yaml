@@ -24,7 +24,7 @@ concepts:
   - name: Skill
     aliases: [command, slash-command]
     related: [Schema, Change]
-    def: A Skill is a markdown instruction file stored in `openspec/skills/<name>/SKILL.md` that any capable AI agent or IDE can load and execute to implement an OpenSpec workflow command.
+    def: A Skill is a markdown instruction file stored in `openspec/skills/<name>/SKILL.md` that any capable AI agent or IDE can load and execute to implement an OpenSpec workflow command. Frontmatter includes `description` and `agent` fields compatible with the GitHub Copilot prompt file schema.
     file: static/concepts/skill.md
 
   - name: Schema

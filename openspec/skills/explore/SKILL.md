@@ -1,6 +1,7 @@
 ---
 name: explore
 description: "Enter explore mode - think through ideas, investigate problems, clarify requirements"
+agent: ask
 triggers:
   - /opsx:explore
 agents: [claude, copilot, intellij]
