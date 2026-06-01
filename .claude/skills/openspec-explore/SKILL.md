@@ -75,28 +75,6 @@ Depending on what the user brings, you might:
 
 ---
 
-## Domain Knowledge Loading
-
-**At the very start of explore mode**, check for domain knowledge:
-
-1. Check if `openspec/domain/_index.yaml` exists.
-   - **If yes**: read `_index.yaml` into context. Do NOT load individual concept files upfront.
-   - **If no**: proceed without domain context. No error, no mention to user.
-
-2. As the conversation progresses, when a concept name from the index appears in discussion:
-   - Offer to load the full concept file for more depth
-   - If loaded, use canonical names, aliases, states, and rules from the concept definition
-   - Do NOT load all concept files by default — load by name as they become relevant
-
-3. Reference domain knowledge naturally:
-   - "The domain KB defines Invoice states as [draft, pending, approved, paid] — does this change introduce a new state?"
-   - "Rule `approved-before-payment` says invoices must be approved first — does this approach preserve that?"
-
-4. **Rule conflicts**: surface when user's idea would violate a known rule:
-   - "This might conflict with rule `approved-before-payment`. Want to revisit, or update the rule?"
-
----
-
 ## OpenSpec Awareness
 
 You have full context of the OpenSpec system. Use it naturally, don't force it.

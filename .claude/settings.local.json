@@ -1,15 +1,9 @@
 {
   "permissions": {
     "allow": [
-      "Bash(openspec list *)",
       "Bash(openspec new *)",
       "Bash(openspec status *)",
-      "Bash(openspec instructions *)",
-      "Bash(python -c \"import json,sys; d=json.load\\(sys.stdin\\); print\\(f'Complete: {d[\\\\\"progress\\\\\"][\\\\\"complete\\\\\"]}/{d[\\\\\"progress\\\\\"][\\\\\"total\\\\\"]}'\\); print\\(f'State: {d[\\\\\"state\\\\\"]}'\\)\")",
-      "Bash(openspec --version)",
-      "Bash(git add *)",
-      "Bash(git commit -m ' *)",
-      "Bash(git check-ignore *)"
+      "Bash(openspec instructions *)"
     ]
   }
 }

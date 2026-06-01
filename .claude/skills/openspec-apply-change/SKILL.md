@@ -15,14 +15,6 @@ Implement tasks from an OpenSpec change.
 
 **Steps**
 
-0. **Load domain knowledge** (before any other step)
-
-   Check if `openspec/domain/_index.yaml` exists.
-   - **If yes**: read `_index.yaml` into context. Scan the change name and task descriptions for concept names in the index; for each match load the **full file** (frontmatter + prose body) — apply phase needs complete definitions for accurate implementation.
-   - **If no**: proceed without domain context. No error.
-
-   Throughout implementation: use canonical concept names when naming code identifiers; reference domain states, rules, and relationships when implementing logic that touches indexed concepts.
-
 1. **Select the change**
 
    If a name is provided, use it. Otherwise:

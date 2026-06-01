@@ -50,21 +50,7 @@ Archive a completed change in the experimental workflow.
 
    **If no tasks file exists:** Proceed without task-related warning.
 
-4. **Domain knowledge review** (skip this entire step if `openspec/domain/` does not exist)
-
-   a. **Load domain index** — Read `openspec/domain/_index.yaml`. If missing or malformed, warn and skip to step 5.
-
-   b. **Surface discovery candidates** — Compare the completed change's tasks/specs against the domain KB. For any behavior or fact in the implementation not reflected in existing concepts, rules, or active discoveries, propose it as a candidate. Present each candidate with a one-line description and ask: "Capture this? (yes / no)"
-
-      If no candidates are found: skip capture prompt and continue.
-
-   c. **Capture confirmed discoveries** — For each confirmed candidate, create a discovery file at `openspec/domain/discovered/<kebab-name>.md` with frontmatter (`name`, `type: discovery`, `discovered_in`, `date`, `relates_to`, `status: active`, `superseded_by: null`) and a prose description. For declined candidates: no file created.
-
-   d. **Check for contradictions** — Scan all `active` discoveries. For each that the completed change explicitly contradicts, surface the conflict and ask whether to mark it `superseded`. If yes: update the file's `status: superseded` and `superseded_by: <change-name>`.
-
-   e. **Regenerate domain index** — Scan all files under `openspec/domain/static/` and `openspec/domain/discovered/`, validate frontmatter, and write updated `openspec/domain/_index.yaml`. Report entry counts.
-
-5. **Assess delta spec sync state**
+4. **Assess delta spec sync state**
 
    Check for delta specs at `openspec/changes/<name>/specs/`. If none exist, proceed without sync prompt.
 

@@ -24,14 +24,6 @@ When ready to implement, run /opsx:apply
 
 **Steps**
 
-0. **Load domain knowledge** (before any other step)
-
-   Check if `openspec/domain/_index.yaml` exists.
-   - **If yes**: read `_index.yaml` into context. Scan the change description for concept names in the index; for each match load its frontmatter (not prose body) from the static concepts/processes directory.
-   - **If no**: proceed without domain context. No error.
-
-   Throughout artifact generation: use canonical concept names from domain KB; before finalizing proposal, check against known rules and surface any conflicts.
-
 1. **If no clear input provided, ask what they want to build**
 
    Use the **AskUserQuestion tool** (open-ended, no preset options) to ask:
