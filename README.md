@@ -55,7 +55,7 @@ openspec init
 The `skills/` directory in this repo is a distributable package containing a single bootstrapping skill — the domain skill. Copy it to your project:
 
 ```bash
-cp -r skills/skills <your-project>/.claude/
+cp -r skills/. <your-project>/.claude/
 ```
 
 Then run the domain skill's init command once:
