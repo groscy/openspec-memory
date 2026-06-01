@@ -286,7 +286,29 @@ It belongs to a single Customer and must be approved before payment is recorded.
 
 Run the Index Generation Procedure and write `openspec/domain/_index.yaml`.
 
-### Step 8: Report
+### Step 8: Configure OpenSpec skills
+
+Check if `openspec/skills/` exists in the project.
+
+- **If yes**: for each directory `openspec/skills/<name>/` containing a `SKILL.md`:
+  1. Read the SKILL.md file
+  2. Parse the frontmatter block to extract `name`, `description`, and the first entry in `triggers`
+  3. Extract the prose body (everything after the closing `---` of the frontmatter)
+  4. Write `.claude/commands/opsx/<name>.md` with this content:
+     ```markdown
+     ---
+     description: "<description from frontmatter>"
+     ---
+     <!-- Configured by /opsx:domain init — source: openspec/skills/<name>/SKILL.md -->
+     <!-- Trigger: <trigger> -->
+
+     <prose body>
+     ```
+  5. Skip any SKILL.md that fails frontmatter validation; warn and continue
+
+- **If no**: skip this step silently.
+
+### Step 9: Report
 
 ```
 ## Domain KB Initialized
@@ -298,10 +320,19 @@ Created:
 - openspec/domain/static/rules.md (Q rules)
 - openspec/domain/_index.yaml (auto-generated index)
 
+Skills configured:
+- .claude/commands/opsx/apply.md
+- .claude/commands/opsx/archive.md
+- .claude/commands/opsx/domain.md
+- .claude/commands/opsx/explore.md
+- .claude/commands/opsx/propose.md
+
 All OpenSpec skills will now load domain context automatically.
 Next: /opsx:domain add concept <name>  to add more entries
       /opsx:domain sync                to regenerate the index after direct edits
 ```
+
+If no `openspec/skills/` directory was found, omit the "Skills configured" section.
 
 ---
 

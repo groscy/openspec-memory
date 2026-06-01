@@ -65,25 +65,21 @@ Everything after the closing `---` of the frontmatter is the prose body. The pro
   ```
   Other agents ignore such hints.
 
-## Using Skills in Your Environment
+## Installing Skills
 
-Pre-built adapter files live alongside this repo. Copy the relevant files to your project:
+Skill adapter files are written to `.claude/commands/opsx/` by `/opsx:domain init`. They are gitignored and regenerated on demand — do not commit them.
 
-| Environment | Source | Destination |
-|---|---|---|
-| Claude Code | `.claude/commands/opsx/<name>.md` | `<your-project>/.claude/commands/opsx/` |
-| GitHub Copilot Chat | `.github/copilot-instructions/<name>.md` | `<your-project>/.github/copilot-instructions/` |
-| JetBrains IntelliJ | `.idea/runConfigurations/opsx_<name>.xml` | `<your-project>/.idea/runConfigurations/` |
+To install or reinstall skills manually, run `/opsx:domain init` or ask the domain skill to re-run its skills configuration step.
 
 ## Adding a New Skill
 
 1. Create `openspec/skills/<name>/SKILL.md` with required frontmatter
 2. Write the skill's prose body instructions
-3. Create adapter files manually for each target environment (see format of existing adapters)
-4. Commit all files — source and adapters together
+3. Commit the `openspec/skills/<name>/SKILL.md` file
+4. Run `/opsx:domain init` (or ask the domain skill to configure skills) to write the adapter file
 
 ## Updating a Skill
 
 1. Edit `openspec/skills/<name>/SKILL.md`
-2. Regenerate each adapter file from the updated prose body
-3. Commit both the source and adapter changes together
+2. Commit the change
+3. Re-run the domain skill's configure step to update `.claude/commands/opsx/<name>.md`

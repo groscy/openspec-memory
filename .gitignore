@@ -1,2 +1,7 @@
 # Un-ignore project-level Claude Code settings (contains shared permissions)
 !.claude/settings.local.json
+
+# Skill adapter files — written by /opsx:domain init, not committed
+.claude/commands/opsx/
+.github/copilot-instructions/
+.idea/runConfigurations/opsx_*.xml

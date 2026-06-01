@@ -1,9 +1,0 @@
-<component name="ProjectRunConfigurationManager">
-  <configuration default="false" name="opsx: domain" type="OpenSpecSkillRunner" factoryName="OpenSpec Skill">
-    <option name="SKILL_NAME" value="domain" />
-    <option name="SKILL_PATH" value="openspec/skills/domain/SKILL.md" />
-    <option name="TRIGGER" value="/opsx:domain" />
-    <option name="DESCRIPTION" value="Manage the OpenSpec domain knowledge base - initialize, add entries, and sync the index" />
-    <method v="2" />
-  </configuration>
-</component>

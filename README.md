@@ -56,42 +56,25 @@ The `openspec/` directory is already present in this repo. If you are adopting t
 openspec init
 ```
 
-### 4. Activate the skills for your environment
+### 4. Initialize the domain knowledge base
 
-Pre-built adapter files are included in this repo. Copy the relevant files to your project:
-
-#### Claude Code
-
-`.claude/commands/opsx/` is already present and active when you open this project in Claude Code. To use the skills in a different project, copy the directory:
+Run the domain init command once to scaffold the domain KB and configure the OpenSpec skills for your project:
 
 ```
-.claude/commands/opsx/   →   <your-project>/.claude/commands/opsx/
+/opsx:domain init
 ```
 
-The slash commands are then available:
+The init command will:
+1. Interview you about your project's domain (concepts, processes, rules, terminology)
+2. Write all domain KB files under `openspec/domain/`
+3. Generate `openspec/domain/_index.yaml`
+4. Write skill adapter files to `.claude/commands/opsx/` from the sources in `openspec/skills/`
+
+After init, the slash commands are active in Claude Code:
+
 ```
 /opsx:domain   /opsx:propose   /opsx:apply   /opsx:explore   /opsx:archive
 ```
-
-#### GitHub Copilot Chat
-
-Copy the Copilot adapter files to your project:
-
-```
-.github/copilot-instructions/   →   <your-project>/.github/copilot-instructions/
-```
-
-In Copilot Chat, use the trigger shown in each file's header (e.g., `/opsx:propose`) to invoke the skill.
-
-#### JetBrains IntelliJ
-
-Copy the run configurations to your project's `.idea/` directory:
-
-```
-.idea/runConfigurations/opsx_*.xml   →   <your-project>/.idea/runConfigurations/
-```
-
-The skills then appear in the Run menu. If you have the OpenSpec IntelliJ plugin installed, it also reads `openspec/skills/` directly.
 
 ## Usage
 
@@ -159,15 +142,11 @@ openspec-memory/
 │       │   ├── glossary.md
 │       │   └── rules.md
 │       └── discovered/
-├── .claude/
-│   └── commands/opsx/         # Claude Code adapter files (copy to your project)
-├── .github/
-│   └── copilot-instructions/  # Copilot Chat adapter files (copy to your project)
-└── .idea/
-    └── runConfigurations/     # IntelliJ run configs (copy to your project)
+└── .claude/
+    └── commands/opsx/         # Written by /opsx:domain init (gitignored)
 ```
 
-> **Note**: Adapter files in `.claude/commands/opsx/`, `.github/copilot-instructions/`, and `.idea/runConfigurations/` are derived from the canonical sources in `openspec/skills/`. When modifying a skill, update `openspec/skills/<name>/SKILL.md` and regenerate the adapter file manually.
+> **Note**: `.claude/commands/opsx/` is written by `/opsx:domain init` from the sources in `openspec/skills/` and is gitignored. The canonical skill content lives in `openspec/skills/<name>/SKILL.md`.
 
 ## How domain awareness works
 
