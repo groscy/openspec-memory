@@ -5,32 +5,32 @@ concepts:
     states: [in-progress, complete, archived]
     rules: [tasks-required-before-apply]
     actors: [Developer]
-    def: The core unit of work in OpenSpec — a named directory containing all artifacts that describe and implement a single improvement.
+    def: A Change is the core unit of work in OpenSpec — a named directory containing all artifacts (proposal, design, specs, tasks) that describe and implement a single coherent improvement to a project.
     file: static/concepts/change.md
 
   - name: Artifact
     aliases: []
     related: [Change, Schema]
     states: [pending, done]
-    def: A generated document within a Change (e.g., proposal.md, design.md, tasks.md, specs/).
+    def: An Artifact is a generated document within a Change — examples include `proposal.md`, `design.md`, `tasks.md`, and `specs/**/*.md`.
     file: static/concepts/artifact.md
 
   - name: Spec
     aliases: [capability-spec, delta-spec]
     related: [Change, Capability]
-    def: A capability specification containing requirements and BDD-style scenarios (WHEN/THEN).
+    def: A Spec is a capability specification containing requirements and BDD-style scenarios (WHEN/THEN).
     file: static/concepts/spec.md
 
   - name: Skill
     aliases: [command, slash-command]
     related: [Schema, Change]
-    def: A markdown instruction file stored in `openspec/skills/<name>/SKILL.md` that any capable AI agent or IDE can load and execute to implement an OpenSpec workflow command.
+    def: A Skill is a markdown instruction file stored in `openspec/skills/<name>/SKILL.md` that any capable AI agent or IDE can load and execute to implement an OpenSpec workflow command.
     file: static/concepts/skill.md
 
   - name: Schema
     aliases: [workflow-schema]
     related: [Artifact, Change]
-    def: Defines the workflow type for a Change — which Artifact types exist, their dependencies, and which must be done before apply can run.
+    def: A Schema defines the workflow type for a Change — it specifies which Artifact types exist, their dependencies, templates, and which artifacts must be complete before implementation can start (`applyRequires`).
     file: static/concepts/schema.md
 
   - name: Discovery
@@ -38,57 +38,60 @@ concepts:
     related: [Change, Spec]
     states: [active, superseded, invalidated]
     rules: [discoveries-default-active]
-    def: A domain fact surfaced during development, stored with provenance and a lifecycle status.
+    def: A Discovery is a domain fact surfaced during development — a behavior, constraint, or relationship that was implicit in the implementation but not previously documented in the domain KB.
     file: static/concepts/discovery.md
 
 processes:
   - name: ChangeProposal
     aliases: [propose]
     related: [Change, Artifact, Schema, Developer]
-    def: The workflow for creating a new Change with all required Artifacts in one step, triggered by /opsx:propose.
+    actors: [Developer]
+    def: ChangeProposal is the workflow for creating a new Change with all required Artifacts in one step, triggered by `/opsx:propose`.
     file: static/processes/change-proposal.md
 
   - name: ChangeApplication
     aliases: [apply]
     related: [Change, Artifact, Skill]
+    actors: [Developer]
     rules: [tasks-required-before-apply, domain-loaded-on-entry, concept-files-by-name-only]
-    def: The workflow for implementing a Change's tasks one by one, triggered by /opsx:apply.
+    def: ChangeApplication is the workflow for implementing a Change's tasks one by one, triggered by `/opsx:apply`.
     file: static/processes/change-application.md
 
   - name: ChangeArchival
     aliases: [archive]
     related: [Change, Spec, Discovery]
+    actors: [Developer]
     rules: [index-never-hand-edited, discoveries-default-active]
-    def: The workflow for finalizing a completed Change — domain review, spec sync, and directory move — triggered by /opsx:archive.
+    def: ChangeArchival is the workflow for finalizing a completed Change, triggered by `/opsx:archive`.
     file: static/processes/change-archival.md
 
 glossary:
   - term: Delta spec
-    def: A spec file inside a change directory that differs from or extends the corresponding main spec.
+    def: A spec file inside `openspec/changes/<name>/specs/` that differs from or extends the corresponding main spec at `openspec/specs/<capability>/spec.md`.
 
   - term: Frontmatter
-    def: YAML metadata block delimited by --- at the top of a markdown file; parsed by skills to build the domain index.
+    def: YAML metadata block delimited by `---` at the top of a markdown file; parsed by skills to build the domain index and validate file structure.
 
   - term: Capability
-    def: A named domain area used as the directory name under openspec/specs/.
+    def: A named domain area used as the directory name under `openspec/specs/` (e.g., `domain-index`, `domain-skill`).
 
   - term: Domain index
-    def: The auto-generated openspec/domain/_index.yaml providing a token-efficient summary of all domain knowledge.
+    def: The auto-generated `openspec/domain/_index.yaml`; provides a token-efficient compact summary of all domain knowledge loaded by skills on entry.
 
 rules:
   - id: index-never-hand-edited
-    def: _index.yaml must never be edited manually — always regenerated by /opsx:domain sync or /opsx:archive.
+    def: "`_index.yaml` must never be edited manually — it is always regenerated by `/opsx:domain sync` or `/opsx:archive`."
 
   - id: tasks-required-before-apply
-    def: A change must have a completed tasks artifact before /opsx:apply can run.
+    def: A change must have a completed `tasks` artifact before `/opsx:apply` can run.
 
   - id: domain-loaded-on-entry
-    def: Every skill must load _index.yaml at the very start of execution when openspec/domain/ exists.
+    def: Every skill must check for `openspec/domain/` and load `_index.yaml` at the very start of execution when the directory exists.
 
   - id: concept-files-by-name-only
-    def: Skills load individual concept files only when the concept name appears in current change scope — never all files by default.
+    def: Skills must load individual concept files only when the concept name appears in the current change or task scope — never load all concept files by default.
 
   - id: discoveries-default-active
-    def: Newly captured discoveries must always be written with status active.
+    def: Newly captured discoveries must always be written with `status: active`.
 
 discoveries: []
