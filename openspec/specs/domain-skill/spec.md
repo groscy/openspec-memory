@@ -23,7 +23,7 @@ The `/opsx:domain` skill SHALL be stored as `openspec/skills/domain/SKILL.md` wi
 ## ADDED Requirements
 
 ### Requirement: Domain skill init command
-The `/opsx:domain` skill SHALL support an `init` subcommand that scaffolds the full domain knowledge base from scratch. `init` SHALL be conversational: it interviews the user to extract concepts, processes, terminology, and rules, then drafts files for user confirmation before writing.
+The `/opsx:domain` skill SHALL support an `init` subcommand that scaffolds the full domain knowledge base from scratch and then configures all project skills. `init` SHALL be conversational: it interviews the user to extract concepts, processes, terminology, and rules, then drafts files for user confirmation before writing. After writing domain KB files, it SHALL run skill configuration for the current project.
 
 #### Scenario: Init creates directory structure
 - **WHEN** the user runs `/opsx:domain init`
@@ -43,8 +43,13 @@ The `/opsx:domain` skill SHALL support an `init` subcommand that scaffolds the f
 - **THEN** it SHALL write files only after the user confirms
 
 #### Scenario: Init generates index after writing
-- **WHEN** all files are written during `init`
+- **WHEN** all domain KB files are written during `init`
 - **THEN** the skill SHALL generate `_index.yaml` automatically
+
+#### Scenario: Init configures project skills after domain KB setup
+- **WHEN** domain KB files have been written and `openspec/skills/` exists
+- **THEN** the skill SHALL run `openspec install skills` to configure all skills in `openspec/skills/`
+- **THEN** the skill SHALL report how many adapters were written and for which environments
 
 ### Requirement: Domain skill add command
 The `/opsx:domain` skill SHALL support an `add` subcommand that creates a single concept, process, rule, or actor entry and updates the index.
