@@ -1,0 +1,9 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="opsx: archive" type="OpenSpecSkillRunner" factoryName="OpenSpec Skill">
+    <option name="SKILL_NAME" value="archive" />
+    <option name="SKILL_PATH" value="openspec/skills/archive/SKILL.md" />
+    <option name="TRIGGER" value="/opsx:archive" />
+    <option name="DESCRIPTION" value="Archive a completed change in the experimental workflow" />
+    <method v="2" />
+  </configuration>
+</component>

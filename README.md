@@ -56,50 +56,42 @@ The `openspec/` directory is already present in this repo. If you are adopting t
 openspec init
 ```
 
-### 4. Install skills for your environment
+### 4. Activate the skills for your environment
 
-Skills are stored in `openspec/skills/` and must be installed for your AI environment before first use. Run:
-
-```bash
-openspec install skills
-```
-
-This generates adapter files for all supported environments. To target a specific environment:
-
-```bash
-openspec install skills --env claude      # Claude Code
-openspec install skills --env copilot     # GitHub Copilot Chat
-openspec install skills --env intellij    # JetBrains IntelliJ OpenSpec plugin
-openspec install skills --env all         # all of the above (default)
-```
+Pre-built adapter files are included in this repo. Copy the relevant files to your project:
 
 #### Claude Code
 
-After running `openspec install skills --env claude`, the skills are available as slash commands:
+`.claude/commands/opsx/` is already present and active when you open this project in Claude Code. To use the skills in a different project, copy the directory:
 
 ```
-/opsx:domain
-/opsx:propose
-/opsx:apply
-/opsx:explore
-/opsx:archive
+.claude/commands/opsx/   →   <your-project>/.claude/commands/opsx/
 ```
 
-Claude Code picks up `.claude/commands/opsx/` from the project root automatically. To verify, open Claude Code in this directory and run `/opsx:domain` — you should see the available subcommands.
+The slash commands are then available:
+```
+/opsx:domain   /opsx:propose   /opsx:apply   /opsx:explore   /opsx:archive
+```
 
 #### GitHub Copilot Chat
 
-After running `openspec install skills --env copilot`, adapter files are written to `.github/copilot-instructions/`. In Copilot Chat, use the trigger from the file header to invoke each skill (e.g., `/opsx:propose`). Copilot will load the skill instructions and follow the workflow.
+Copy the Copilot adapter files to your project:
+
+```
+.github/copilot-instructions/   →   <your-project>/.github/copilot-instructions/
+```
+
+In Copilot Chat, use the trigger shown in each file's header (e.g., `/opsx:propose`) to invoke the skill.
 
 #### JetBrains IntelliJ
 
-If you have the OpenSpec IntelliJ plugin installed, it reads `openspec/skills/` automatically on project open and registers each skill as an IDE action. You can also run:
+Copy the run configurations to your project's `.idea/` directory:
 
-```bash
-openspec install skills --env intellij
+```
+.idea/runConfigurations/opsx_*.xml   →   <your-project>/.idea/runConfigurations/
 ```
 
-This writes `.idea/runConfigurations/opsx_<name>.xml` run configs so skills appear in the Run menu without a plugin update.
+The skills then appear in the Run menu. If you have the OpenSpec IntelliJ plugin installed, it also reads `openspec/skills/` directly.
 
 ## Usage
 
@@ -167,11 +159,15 @@ openspec-memory/
 │       │   ├── glossary.md
 │       │   └── rules.md
 │       └── discovered/
-└── .claude/
-    └── commands/opsx/         # Generated Claude adapters (run: openspec install skills)
+├── .claude/
+│   └── commands/opsx/         # Claude Code adapter files (copy to your project)
+├── .github/
+│   └── copilot-instructions/  # Copilot Chat adapter files (copy to your project)
+└── .idea/
+    └── runConfigurations/     # IntelliJ run configs (copy to your project)
 ```
 
-> **Note**: `.claude/commands/opsx/` is generated output. The canonical skill source is `openspec/skills/`. Run `openspec install skills` to regenerate adapters after modifying skills.
+> **Note**: Adapter files in `.claude/commands/opsx/`, `.github/copilot-instructions/`, and `.idea/runConfigurations/` are derived from the canonical sources in `openspec/skills/`. When modifying a skill, update `openspec/skills/<name>/SKILL.md` and regenerate the adapter file manually.
 
 ## How domain awareness works
 

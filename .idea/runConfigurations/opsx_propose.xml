@@ -1,0 +1,9 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="opsx: propose" type="OpenSpecSkillRunner" factoryName="OpenSpec Skill">
+    <option name="SKILL_NAME" value="propose" />
+    <option name="SKILL_PATH" value="openspec/skills/propose/SKILL.md" />
+    <option name="TRIGGER" value="/opsx:propose" />
+    <option name="DESCRIPTION" value="Propose a new change - create it and generate all artifacts in one step" />
+    <method v="2" />
+  </configuration>
+</component>

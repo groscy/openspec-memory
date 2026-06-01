@@ -1,0 +1,9 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="opsx: explore" type="OpenSpecSkillRunner" factoryName="OpenSpec Skill">
+    <option name="SKILL_NAME" value="explore" />
+    <option name="SKILL_PATH" value="openspec/skills/explore/SKILL.md" />
+    <option name="TRIGGER" value="/opsx:explore" />
+    <option name="DESCRIPTION" value="Enter explore mode - think through ideas, investigate problems, clarify requirements" />
+    <method v="2" />
+  </configuration>
+</component>

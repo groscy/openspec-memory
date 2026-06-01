@@ -1,7 +1,2 @@
 # Un-ignore project-level Claude Code settings (contains shared permissions)
 !.claude/settings.local.json
-
-# Generated adapter files — source of truth is openspec/skills/<name>/SKILL.md
-# Regenerate with: openspec install skills
-.github/copilot-instructions/
-.idea/runConfigurations/opsx_*.xml
