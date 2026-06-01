@@ -56,17 +56,50 @@ The `openspec/` directory is already present in this repo. If you are adopting t
 openspec init
 ```
 
-### 4. Activate the skills
+### 4. Install skills for your environment
 
-The `/opsx:*` skills live in `.claude/commands/opsx/` and are automatically available to Claude Code when you open this project directory. No additional installation step is required — Claude Code picks up `.claude/` from the project root.
+Skills are stored in `openspec/skills/` and must be installed for your AI environment before first use. Run:
 
-To verify the skills are loaded, open Claude Code in this directory and run:
+```bash
+openspec install skills
+```
+
+This generates adapter files for all supported environments. To target a specific environment:
+
+```bash
+openspec install skills --env claude      # Claude Code
+openspec install skills --env copilot     # GitHub Copilot Chat
+openspec install skills --env intellij    # JetBrains IntelliJ OpenSpec plugin
+openspec install skills --env all         # all of the above (default)
+```
+
+#### Claude Code
+
+After running `openspec install skills --env claude`, the skills are available as slash commands:
 
 ```
 /opsx:domain
+/opsx:propose
+/opsx:apply
+/opsx:explore
+/opsx:archive
 ```
 
-You should see the available subcommands listed.
+Claude Code picks up `.claude/commands/opsx/` from the project root automatically. To verify, open Claude Code in this directory and run `/opsx:domain` — you should see the available subcommands.
+
+#### GitHub Copilot Chat
+
+After running `openspec install skills --env copilot`, adapter files are written to `.github/copilot-instructions/`. In Copilot Chat, use the trigger from the file header to invoke each skill (e.g., `/opsx:propose`). Copilot will load the skill instructions and follow the workflow.
+
+#### JetBrains IntelliJ
+
+If you have the OpenSpec IntelliJ plugin installed, it reads `openspec/skills/` automatically on project open and registers each skill as an IDE action. You can also run:
+
+```bash
+openspec install skills --env intellij
+```
+
+This writes `.idea/runConfigurations/opsx_<name>.xml` run configs so skills appear in the Run menu without a plugin update.
 
 ## Usage
 
@@ -111,36 +144,34 @@ The domain KB integrates transparently into the standard workflow:
 
 ```
 openspec-memory/
-├── .claude/
-│   ├── commands/opsx/         # Slash commands (/opsx:domain, /opsx:apply, etc.)
-│   │   ├── domain.md          # New: domain KB management skill
-│   │   ├── apply.md           # Extended: domain-aware implementation
-│   │   ├── archive.md         # Extended: discovery capture + index regeneration
-│   │   ├── explore.md         # Extended: domain context in exploration
-│   │   └── propose.md         # Extended: rule conflict detection
-│   └── skills/                # Marketplace-style skill files (invokable via Skill tool)
-│       ├── openspec-domain/
-│       ├── openspec-apply-change/
-│       ├── openspec-archive-change/
-│       ├── openspec-explore/
-│       └── openspec-propose/
-└── openspec/
-    ├── config.yaml            # Schema: spec-driven
-    ├── specs/                 # Capability specs for this change
-    │   ├── domain-awareness/
-    │   ├── domain-discovered-knowledge/
-    │   ├── domain-index/
-    │   ├── domain-skill/
-    │   └── domain-static-knowledge/
-    └── domain/                # Domain KB for the OpenSpec domain itself
-        ├── _index.yaml
-        ├── static/
-        │   ├── concepts/      # Change, Artifact, Spec, Skill, Schema, Discovery
-        │   ├── processes/     # ChangeProposal, ChangeApplication, ChangeArchival
-        │   ├── glossary.md
-        │   └── rules.md
-        └── discovered/
+├── openspec/
+│   ├── config.yaml            # Schema: spec-driven
+│   ├── skills/                # Canonical skill source (tracked in git)
+│   │   ├── README.md          # Layout and frontmatter schema reference
+│   │   ├── apply/SKILL.md
+│   │   ├── archive/SKILL.md
+│   │   ├── domain/SKILL.md
+│   │   ├── explore/SKILL.md
+│   │   └── propose/SKILL.md
+│   ├── specs/                 # Capability specs
+│   │   ├── domain-awareness/
+│   │   ├── domain-discovered-knowledge/
+│   │   ├── domain-index/
+│   │   ├── domain-skill/
+│   │   └── domain-static-knowledge/
+│   └── domain/                # Domain KB for the OpenSpec domain itself
+│       ├── _index.yaml
+│       ├── static/
+│       │   ├── concepts/      # Change, Artifact, Spec, Skill, Schema, Discovery
+│       │   ├── processes/     # ChangeProposal, ChangeApplication, ChangeArchival
+│       │   ├── glossary.md
+│       │   └── rules.md
+│       └── discovered/
+└── .claude/
+    └── commands/opsx/         # Generated Claude adapters (run: openspec install skills)
 ```
+
+> **Note**: `.claude/commands/opsx/` is generated output. The canonical skill source is `openspec/skills/`. Run `openspec install skills` to regenerate adapters after modifying skills.
 
 ## How domain awareness works
 

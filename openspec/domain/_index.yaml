@@ -24,7 +24,7 @@ concepts:
   - name: Skill
     aliases: [command, slash-command]
     related: [Schema, Change]
-    def: A markdown instruction file that Claude loads and executes to implement an OpenSpec workflow command.
+    def: A markdown instruction file stored in `openspec/skills/<name>/SKILL.md` that any capable AI agent or IDE can load and execute to implement an OpenSpec workflow command.
     file: static/concepts/skill.md
 
   - name: Schema
