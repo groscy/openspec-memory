@@ -23,9 +23,9 @@ Existing skills are extended to load the domain index on entry and use canonical
 
 ## Requirements
 
-- [Claude Code](https://claude.ai/code) — CLI or desktop app
 - [OpenSpec CLI](https://github.com/fission-ai/openspec) v1.3.1 or later
 - Node.js v18 or later (required by the OpenSpec CLI)
+- One of: [Claude Code](https://claude.ai/code) or GitHub Copilot Chat
 
 ## Installation
 
@@ -33,12 +33,6 @@ Existing skills are extended to load the domain index on entry and use canonical
 
 ```bash
 npm install -g @fission-ai/openspec
-```
-
-Verify:
-
-```bash
-openspec --version
 ```
 
 ### 2. Clone this repository
@@ -56,25 +50,39 @@ The `openspec/` directory is already present in this repo. If you are adopting t
 openspec init
 ```
 
-### 4. Initialize the domain knowledge base
+### 4. Set up for your AI environment
 
-Run the domain init command once to scaffold the domain KB and configure the OpenSpec skills for your project:
+#### Claude Code
+
+Run the domain init command once to scaffold the domain KB and configure the OpenSpec skills:
 
 ```
 /opsx:domain init
 ```
 
-The init command will:
-1. Interview you about your project's domain (concepts, processes, rules, terminology)
-2. Write all domain KB files under `openspec/domain/`
-3. Generate `openspec/domain/_index.yaml`
-4. Write skill adapter files to `.claude/commands/opsx/` from the sources in `openspec/skills/`
-
-After init, the slash commands are active in Claude Code:
+This will interview you about your domain, create all domain KB files, and write the skill adapter files to `.claude/commands/opsx/`. After init, the slash commands are active:
 
 ```
 /opsx:domain   /opsx:propose   /opsx:apply   /opsx:explore   /opsx:archive
 ```
+
+#### GitHub Copilot Chat
+
+The `.github/copilot-instructions/` directory in this repo contains ready-to-use instruction files for each skill. Copy it to your project:
+
+```bash
+cp -r .github/copilot-instructions <your-project>/.github/
+```
+
+Then invoke skills in Copilot Chat by starting a message with the trigger, e.g.:
+
+```
+/opsx:propose add user authentication
+/opsx:apply
+/opsx:domain init
+```
+
+Copilot will load the matching instruction file and follow the workflow.
 
 ## Usage
 
@@ -142,11 +150,18 @@ openspec-memory/
 │       │   ├── glossary.md
 │       │   └── rules.md
 │       └── discovered/
+├── .github/
+│   └── copilot-instructions/  # Copilot Chat adapter files (copy to your project)
+│       ├── apply.md
+│       ├── archive.md
+│       ├── domain.md
+│       ├── explore.md
+│       └── propose.md
 └── .claude/
     └── commands/opsx/         # Written by /opsx:domain init (gitignored)
 ```
 
-> **Note**: `.claude/commands/opsx/` is written by `/opsx:domain init` from the sources in `openspec/skills/` and is gitignored. The canonical skill content lives in `openspec/skills/<name>/SKILL.md`.
+> **Note**: `.github/copilot-instructions/` contains committed adapter files for Copilot Chat — copy them to your project. `.claude/commands/opsx/` is written by `/opsx:domain init` and is gitignored. The canonical skill content for both lives in `openspec/skills/<name>/SKILL.md`.
 
 ## How domain awareness works
 
