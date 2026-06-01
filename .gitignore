@@ -3,5 +3,4 @@
 
 # Skill adapter files — written by /opsx:domain init, not committed
 .claude/commands/opsx/
-.github/copilot-instructions/
 .idea/runConfigurations/opsx_*.xml
