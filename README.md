@@ -50,39 +50,25 @@ The `openspec/` directory is already present in this repo. If you are adopting t
 openspec init
 ```
 
-### 4. Set up for your AI environment
+### 4. Copy the domain skill to your AI environment
 
-#### Claude Code
+The `skills/` directory in this repo is a distributable package containing a single bootstrapping skill — the domain skill. Copy it to your project:
 
-Run the domain init command once to scaffold the domain KB and configure the OpenSpec skills:
+```bash
+cp -r skills/skills <your-project>/.claude/
+```
+
+Then run the domain skill's init command once:
 
 ```
 /opsx:domain init
 ```
 
-This will interview you about your domain, create all domain KB files, and write the skill adapter files to `.claude/commands/opsx/`. After init, the slash commands are active:
+This interviews you about your domain, creates the domain KB, and configures the full OpenSpec skill suite for your environment. After init, all slash commands are active:
 
 ```
 /opsx:domain   /opsx:propose   /opsx:apply   /opsx:explore   /opsx:archive
 ```
-
-#### GitHub Copilot Chat
-
-The `.github/copilot-instructions/` directory in this repo contains ready-to-use instruction files for each skill. Copy it to your project:
-
-```bash
-cp -r .github/copilot-instructions <your-project>/.github/
-```
-
-Then invoke skills in Copilot Chat by starting a message with the trigger, e.g.:
-
-```
-/opsx:propose add user authentication
-/opsx:apply
-/opsx:domain init
-```
-
-Copilot will load the matching instruction file and follow the workflow.
 
 ## Usage
 
@@ -123,10 +109,69 @@ The domain KB integrates transparently into the standard workflow:
 /opsx:archive   → captures domain discoveries, updates the index
 ```
 
+## The `skills/` distributable
+
+`skills/` is the distributable package you copy to get started. It intentionally contains only one skill — the domain skill — which acts as a bootstrapper for everything else.
+
+### What it does
+
+The domain skill manages your project's domain knowledge base and bootstraps the full skill suite. It has three subcommands:
+
+| Subcommand | What it does |
+|---|---|
+| `init` | Interviews you about your domain, scaffolds the KB, then installs all skills from `openspec/skills/` |
+| `add <type> <name>` | Adds a single concept, process, rule, or actor and regenerates the index |
+| `sync` | Regenerates `_index.yaml` from current files after direct edits |
+
+### How `init` works
+
+`init` is a two-phase bootstrap:
+
+1. **Domain KB setup** — asks you to describe your domain in plain language; optionally scans your codebase (`src/`, `models/`, `schemas/`, `routes/`); shows a draft for confirmation; writes concept files, process files, `glossary.md`, `rules.md`, and `_index.yaml`
+2. **Skill configuration** — runs `openspec install skills` to generate adapter files for every skill found in `openspec/skills/`; if no `openspec/skills/` directory exists it warns and skips this phase cleanly
+
+After init, the full skill suite is active in your AI environment without any additional setup.
+
+### Example
+
+```
+You: /opsx:domain init
+
+Claude: Let's scaffold your domain knowledge base. Describe your project's
+        domain in plain language — what are the main things your system
+        manages, and how do they relate?
+
+You: It's an invoicing tool. Customers place orders, we generate invoices,
+     accounting approves them, then marks them paid.
+
+Claude: Found src/models/ — scanning for enrichment...
+
+        Draft summary:
+        Concepts (4): Customer, Order, Invoice, Payment
+        Processes (2): InvoiceGeneration, InvoiceApproval
+        Rules (1): approved-before-payment
+        Glossary (2): Net Terms, Due Date
+
+        Confirm to write files? (yes / revise)
+
+You: yes
+
+Claude: ✓ Written: 4 concepts, 2 processes, glossary.md, rules.md, _index.yaml
+
+        Configuring project skills from openspec/skills/...
+        ✓ Configured 5 skills for claude: domain, propose, apply, explore, archive
+
+        Skills are ready. Try /opsx:propose to create your first change.
+```
+
 ## Project structure
 
 ```
 openspec-memory/
+├── skills/                    # Distributable package — copy skills/ to your project
+│   └── skills/
+│       └── openspec-domain/
+│           └── SKILL.md       # The domain skill (sole entry point)
 ├── openspec/
 │   ├── config.yaml            # Schema: spec-driven
 │   ├── skills/                # Canonical skill source (tracked in git)
@@ -150,18 +195,11 @@ openspec-memory/
 │       │   ├── glossary.md
 │       │   └── rules.md
 │       └── discovered/
-├── .github/
-│   └── copilot-instructions/  # Copilot Chat adapter files (copy to your project)
-│       ├── apply.md
-│       ├── archive.md
-│       ├── domain.md
-│       ├── explore.md
-│       └── propose.md
 └── .claude/
     └── commands/opsx/         # Written by /opsx:domain init (gitignored)
 ```
 
-> **Note**: `.github/copilot-instructions/` contains committed adapter files for Copilot Chat — copy them to your project. `.claude/commands/opsx/` is written by `/opsx:domain init` and is gitignored. The canonical skill content for both lives in `openspec/skills/<name>/SKILL.md`.
+> **Note**: `skills/` is the distributable — copy it to bootstrap a new project. `openspec/skills/` is the canonical source for all skill content; adapter files in `.claude/commands/opsx/` are generated from it by `init` and are gitignored.
 
 ## How domain awareness works
 
